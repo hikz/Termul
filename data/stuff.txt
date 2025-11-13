@@ -1,0 +1,5 @@
+apel 10 9000
+jeruk 5 2000
+mangga 7 4000
+kulkas 22 900000
+tv 34 23843728
