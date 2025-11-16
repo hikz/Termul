@@ -4,6 +4,7 @@
 #include <iostream>
 #include "src/ascii-art.h"
 #include "src/manipData.h"
+#include "src/ncursesHelper.h"
 using namespace std;
 
 int main()
@@ -14,11 +15,13 @@ int main()
         loadData(dataItem);
         vector<string> menu = {
             "1. Lihat Semua Data Barang",
-            "2. Tambah Barang",
-            "3. Kurangi Barang",
-            "4. Edit Data Barang",
-            "5. Hapus Data Barang",
-            "6. Keluar"};
+            "2. Tambah jenis Barang",
+            "3. Tambah Stok Barang",
+            "4. Kurangi Stok Barang",
+            "5. Edit harga Barang",
+            "6. Edit Nama Barang",
+            "7. Hapus Barang",
+            "8. Keluar"};
 
         initscr();            // Start ncurses
         cbreak();             // Disable line buffering
@@ -93,23 +96,214 @@ int main()
             {
                 mvprintw(8, 2, "%s", dataTable(dataItem).c_str());
             }
-            else if (selected == "2. Tambah Barang")
+            else if (selected == "2. Tambah jenis Barang")
             {
-                mvprintw(8, 2, "Fungsi: Menambahkan barang");
+                int y = 8, x = 2;
+
+                // kosongkan area prompt 
+                for (int i = 0; i < 6; ++i)
+                {
+                    mvprintw(y + i, x, "%-80s", " ");
+                }
+
+                // Minta nama barang
+                string namaBarang = nc_getstr(y, x, "Nama Barang : ", 50);
+                if (namaBarang.empty())
+                {
+                    mvprintw(y + 4, x, "Dibatalkan: nama kosong.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                // Minta harga awal barang sebagai integer
+                auto [okHarga, hargaAwal] = nc_getint(y + 1, x, "Harga Awal Barang : ", 10);
+                if (!okHarga)
+                {
+                    mvprintw(y + 4, x, "Input salah: harga harus angka.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                tambahJenisBarang(dataItem, namaBarang, hargaAwal);
+                saveData(dataItem);
+                mvprintw(y + 3, x, "Berhasil menambahkan jenis barang: %s (Rp.%d)", namaBarang.c_str(), hargaAwal);
+                refresh();
+                getch();
             }
-            else if (selected == "3. Kurangi Barang")
+
+            else if (selected == "3. Tambah Stok Barang")
             {
-                mvprintw(8, 2, "Fungsi: Mengurangi jumlah stok barang.");
+                int y = 8, x = 2;
+
+                // kosongkan area prompt 
+                for (int i = 0; i < 6; ++i)
+                {
+                    mvprintw(y + i, x, "%-80s", " ");
+                }
+
+                // Minta nama barang
+                string namaBarang = nc_getstr(y, x, "Nama Barang : ", 50);
+                if (namaBarang.empty())
+                {
+                    mvprintw(y + 4, x, "Dibatalkan: nama kosong.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                // Minta jumlah barang sebagai integer
+                auto [okQty, tambahBarang] = nc_getint(y + 1, x, "Ingin ditambah berapa: ", 10);
+                if (!okQty)
+                {
+                    mvprintw(y + 4, x, "Input salah: jumlah harus angka.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                tambahStokBarang(dataItem, namaBarang, tambahBarang);
+                saveData(dataItem);
+                mvprintw(y + 3, x, "Berhasil menambahkan: %s (+%d)", namaBarang.c_str(), tambahBarang);
+                refresh();
+                getch(); 
             }
-            else if (selected == "4. Edit Data Barang")
+            else if (selected == "4. Kurangi Stok Barang")
             {
-                mvprintw(8, 2, "Fungsi: Mengedit informasi barang.");
+                int y = 8, x = 2;
+
+                // kosongkan area prompt 
+                for (int i = 0; i < 6; ++i)
+                {
+                    mvprintw(y + i, x, "%-80s", " ");
+                }
+
+                // Minta nama barang
+                string namaBarang = nc_getstr(y, x, "Nama Barang : ", 50);
+                if (namaBarang.empty())
+                {
+                    mvprintw(y + 4, x, "Dibatalkan: nama kosong.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                // Minta jumlah barang sebagai integer
+                auto [okQty, kurangiBarang] = nc_getint(y + 1, x, "Ingin dikurangi berapa: ", 10);
+                if (!okQty)
+                {
+                    mvprintw(y + 4, x, "Input salah: harus angka.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                kurangiStokBarang(dataItem, namaBarang, kurangiBarang);
+                saveData(dataItem);
+                mvprintw(y + 3, x, "Berhasil mengurangi: %s (-%d)", namaBarang.c_str(), kurangiBarang);
+                refresh();
+                getch();
             }
-            else if (selected == "5. Hapus Data Barang")
+            else if (selected == "5. Edit harga Barang")
             {
-                mvprintw(8, 2, "]Fungsi: Menghapus barang dari daftar.");
+                int y = 8, x = 2;
+
+                // kosongkan area prompt 
+                for (int i = 0; i < 6; ++i)
+                {
+                    mvprintw(y + i, x, "%-80s", " ");
+                }
+
+                // Minta nama barang
+                string namaBarang = nc_getstr(y, x, "Nama Barang : ", 50);
+                if (namaBarang.empty())
+                {
+                    mvprintw(y + 4, x, "Dibatalkan: nama kosong.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                // Minta harga baru
+                auto [okQty, hargaBaru] = nc_getint(y + 1, x, "Harga ingin dirubah menjadi berapa: ", 10);
+                if (!okQty)
+                {
+                    mvprintw(y + 4, x, "Input salah: harga harus angka.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                editHargaBarang(dataItem, namaBarang, hargaBaru);
+                saveData(dataItem);
+                mvprintw(y + 3, x, "Berhasil merubahi: %s (Rp.%d)", namaBarang.c_str(), hargaBaru);
+                refresh();
+                getch();
             }
-            else if (selected == "6. Keluar")
+            else if(selected == "6. Edit Nama Barang")
+            {
+                    int y = 8, x = 2;
+
+                // kosongkan area prompt 
+                for (int i = 0; i < 6; ++i)
+                {
+                    mvprintw(y + i, x, "%-80s", " ");
+                }
+
+                // Minta nama barang
+                string namaBarang = nc_getstr(y, x, "Nama Barang : ", 50);
+                if (namaBarang.empty())
+                {
+                    mvprintw(y + 4, x, "Dibatalkan: nama kosong.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                // Minta nama barang baru
+                auto namaBaru = nc_getstr(y + 1, x, "Nama barang ingin dirubah menjadi apa: ", 10);
+                if (namaBaru.empty())
+                {
+                    mvprintw(y + 4, x, "Input salah: nama baru tidak boleh kosong.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                editNamaBarang(dataItem, namaBarang, namaBaru);
+                saveData(dataItem);
+                mvprintw(y + 3, x, "Berhasil merubahi nama barang [%s] menjadi [%s]", namaBarang.c_str(), namaBaru.c_str());
+                refresh();
+                getch();
+            }
+            else if (selected == "7. Hapus Barang")
+            {
+                int y = 8, x = 2;
+
+                // kosongkan area prompt 
+                for (int i = 0; i < 6; ++i)
+                {
+                    mvprintw(y + i, x, "%-80s", " ");
+                }
+
+                // Minta nama barang
+                string namaBarang = nc_getstr(y, x, "Nama Barang yang ingin dihapus: ", 50);
+                if (namaBarang.empty())
+                {
+                    mvprintw(y + 4, x, "Dibatalkan: nama kosong.");
+                    refresh();
+                    getch();
+                    continue;
+                }
+
+                hapusBarang(dataItem, namaBarang);
+                saveData(dataItem);
+                mvprintw(y + 3, x, "Berhasil menghapus barang: %s", namaBarang.c_str());
+                refresh();
+                getch();
+            }
+            else if (selected == "8. Keluar")
             {
                 return 0;
             }

@@ -58,6 +58,42 @@ string dataTable(const vector<Item> &dataItem)
     return ss.str();
 }
 
+bool saveData(const vector<Item> &dataItem, const string &filename = "data/stuff.txt")
+{
+    ofstream file(filename); // tulis ulang file
+
+    if (!file.is_open())
+        return false;
+
+    for (const auto &item : dataItem)
+    {
+        file << item.nama << " "
+             << item.qty << " "
+             << item.harga << "\n";
+    }
+
+    file.close();
+    return true;
+}
+
+bool tambahJenisBarang(vector<Item> &daftar, const string &namaBarang, int hargaAwal) {
+    // Cek apakah barang sudah ada
+    for (const auto &item : daftar) {
+        if (item.nama == namaBarang) {
+            return false; // Barang sudah ada
+        }
+    }
+
+    // Tambah barang baru dengan qty 0
+    Item baru;
+    baru.nama = namaBarang;
+    baru.qty = 0;
+    baru.harga = hargaAwal;
+    daftar.push_back(baru);
+    return true;
+}
+
+
 bool tambahStokBarang(vector<Item> &daftar, const string &namaBarang, int jumlahTambah) {
     // Tidak boleh input negatif
     if (jumlahTambah < 0) {
@@ -120,6 +156,3 @@ bool hapusBarang(vector<Item> &daftar, const string &namaBarang){
 
     // Jika tidak → return false.
 };
-
-
-
