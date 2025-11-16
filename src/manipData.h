@@ -93,23 +93,22 @@ bool tambahJenisBarang(vector<Item> &daftar, const string &namaBarang, int harga
     return true;
 }
 
-
-bool tambahStokBarang(vector<Item> &daftar, const string &namaBarang, int jumlahTambah) {
-    // Tidak boleh input negatif
-    if (jumlahTambah < 0) {
+bool editHargaBarang(vector<Item> &daftar, const string &namaBarang, int hargaBaru){
+    // hargaBaru harus > 0.
+    if (hargaBaru < 0) {
         return false;
     }
 
-    // Cari barang berdasarkan nama
+    // Jika barang ditemukan → ubah field harga.
     for (auto &item : daftar) {
-        if (item.nama == namaBarang) {
-            item.qty += jumlahTambah;   // Tambah stok
-            return true;                 // Berhasil
+        if (item.nama == namaBarang) { // nama stocknya
+            item.harga = hargaBaru; //mauskan jumlah stock
+            return true; // Berhasil
         }
     }
-
-    return false; // Barang tidak ditemukan
-}
+     // Kembalikan false jika tidak ditemukan.
+    return false;
+};
 
 
 bool kurangiStokBarang(vector<Item> &daftar, const string &namaBarang, int jumlahKurang){
