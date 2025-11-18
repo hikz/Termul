@@ -43,9 +43,16 @@ bash
 
 ## Struktur Proyek 📁
 
-
-mkdir -p Termul/src Termul/data
-touch Termul/main.cpp Termul/README.md Termul/src/{ascii-art.h,manipData.h,ncursesHelper.h} Termul/data/stuff.txt
+```text
+Termul/
+├── main.cpp            # Logika aplikasi utama dan menu
+├── src/
+│   ├── ascii-art.h     # Fungsi tampilan ASCII art
+│   ├── manipData.h     # Manipulasi data dan input/output file
+│   └── ncursesHelper.h # Fungsi utilitas ncurses
+├── data/
+│   └── stuff.txt       # Penyimpanan data inventaris
+└── README.md           # File ini
 
 ## Cara Kerja 🔄
 
