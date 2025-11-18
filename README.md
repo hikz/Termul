@@ -53,6 +53,7 @@ Termul/
 ├── data/
 │   └── stuff.txt       # Penyimpanan data inventaris
 └── README.md           # File ini
+```
 
 ## Cara Kerja 🔄
 
