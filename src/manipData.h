@@ -134,10 +134,19 @@ bool kurangiStokBarang(vector<Item> &daftar, const string &namaBarang, int jumla
 
 bool editHargaBarang(vector<Item> &daftar, const string &namaBarang, int hargaBaru){
     // hargaBaru harus > 0.
+    if (hargaBaru < 0) {
+        return false;
+    }
 
     // Jika barang ditemukan → ubah field harga.
-
-    // Kembalikan false jika tidak ditemukan.
+    for (auto &item : daftar) {
+        if (item.nama == namaBarang) {
+            item.harga = hargaBaru;
+            return true; // Berhasil
+        }
+    }
+     // Kembalikan false jika tidak ditemukan.
+    return false;
 };
 
 bool editNamaBarang(vector<Item> &daftar, const string &namaLama, const string &namaBaru){
