@@ -151,10 +151,25 @@ bool editHargaBarang(vector<Item> &daftar, const string &namaBarang, int hargaBa
 
 bool editNamaBarang(vector<Item> &daftar, const string &namaLama, const string &namaBaru){
     // Pastikan tidak ada item lain yang memiliki namaBaru.
+    for (const auto &item : daftar) {
+        if (item.nama == namaBaru) {
+            return false; // Nama baru sudah ada
+        }
+    }
 
     // Tidak boleh namaBaru kosong.
+    if (namaBaru.empty()) {
+        return false;
+    }
 
     // Jika namaLama tidak ditemukan → return false.
+    for (auto &item : daftar) {
+        if (item.nama == namaLama) {
+            item.nama = namaBaru;
+            return true; // Berhasil
+        }
+    }
+    return false; // Nama lama tidak ditemukan
 };
 
 bool hapusBarang(vector<Item> &daftar, const string &namaBarang){
