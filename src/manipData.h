@@ -173,9 +173,14 @@ bool editNamaBarang(vector<Item> &daftar, const string &namaLama, const string &
 };
 
 bool hapusBarang(vector<Item> &daftar, const string &namaBarang){
-    // Cari berdasarkan nama.
-
-    // Jika ketemu → hapus menggunakan erase.
+    // Cari berdasarkan nama. Ketemu → hapus dari vector.
+    for (auto it = daftar.begin(); it != daftar.end(); ++it) {
+        if (it->nama == namaBarang) {
+            daftar.erase(it);
+            return true; // Berhasil dihapus
+        }
+    }    
 
     // Jika tidak → return false.
+    return false;
 };
