@@ -12,7 +12,7 @@ int main()
     while (true)
     {
         vector<Item> dataItem;
-        loadData(dataItem);
+        loadData(dataItem);  //data yang akan muncul di menu yang tersimpan dari load data
         vector<string> menu = {
             "1. Lihat Semua Data Barang",
             "2. Tambah jenis Barang",
@@ -34,46 +34,46 @@ int main()
         int highlight = 0; // menampilakn kotak warna
         int choice = -1; // untuk tidak menampilkan higligt
 
-        while (true)
+        while (true)  //menggunakan whlie loop yang akan selalu aktif
         {
             clear();
-            mvprintw(0, 2, "%s", helloTermulArt().c_str());
+            mvprintw(0, 2, "%s", helloTermulArt().c_str());  //menampilkan screen yang ada di ascii
             mvprintw(15, 2, "=== TERMUL MENU ===");
 
-            for (int i = 0; i < menu_size; i++)
+            for (int i = 0; i < menu_size; i++)  //menampilkan higlight
             {
                 if (i == highlight)
                 {
                     attron(A_REVERSE);
-                    mvprintw(i + 16, 4, "%s", menu[i].c_str());
+                    mvprintw(i + 16, 4, "%s", menu[i].c_str()); //akan muncul kotak di nomer yang di inginkan
                     attroff(A_REVERSE);
                 }
                 else
                 {
-                    mvprintw(i + 16, 4, "%s", menu[i].c_str());
+                    mvprintw(i + 16, 4, "%s", menu[i].c_str()); // tidak akan memunculkan kotak di nomer yang tidak di perlukan
                 }
             }
 
             int key = getch(); //untuk menggunakan atas,bawah,kiri,kanan
 
-            if (key == KEY_UP)
+            if (key == KEY_UP) //ke atas
             {
                 highlight--;
                 if (highlight < 0)
                     highlight = menu_size - 1;
             }
-            else if (key == KEY_DOWN)
+            else if (key == KEY_DOWN) //ke bawah
             {
                 highlight++;
                 if (highlight >= menu_size)
                     highlight = 0;
             }
-            else if (key == KEY_RIGHT)
+            else if (key == KEY_RIGHT) //sebagai pengganti enter tekan kanan,peringatan jika sudah enter selesaikan dulu untuk imput data
             {
                 choice = highlight; // OK / Select
                 break;
             }
-            else if (key == KEY_LEFT)
+            else if (key == KEY_LEFT) //sebagai pengganti cancel tekan kiri
             {
                 choice = -1; // Back / Cancel
                 break;
@@ -303,7 +303,7 @@ int main()
                 refresh();
                 getch();
             }
-            else if (selected == "8. Keluar")
+            else if (selected == "8. Keluar") //keluar dari terminal dan akan berhenti
             {
                 return 0;
             }
