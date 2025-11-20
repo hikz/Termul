@@ -40,7 +40,7 @@ int main()
             mvprintw(0, 2, "%s", helloTermulArt().c_str());  //menampilkan screen yang ada di ascii
             mvprintw(15, 2, "=== TERMUL MENU ===");
 
-            for (int i = 0; i < menu_size; i++)  //menampilkan higlight
+            for (int i = 0; i < menu_size; i++)  //menampilkan menu
             {
                 if (i == highlight)
                 {
