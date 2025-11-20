@@ -24,15 +24,15 @@ int main()
             "8. Keluar"};
 
         initscr();            // Start ncurses
-        cbreak();             // Disable line buffering
-        noecho();             // Don't echo pressed keys
-        keypad(stdscr, TRUE); // Enable arrow keys
-        curs_set(0);          // Hide cursor$1
+        cbreak();             // langsung memasukan key tanpa enter
+        noecho();             // untuk tidak memunculkan key di layar
+        keypad(stdscr, TRUE); // untuk mengaktifkan key atas,bawah,kanan,kiri
+        curs_set(0);          // mematikan cursor
 
-        int menu_size = menu.size();
+        int menu_size = menu.size(); //menangkap banyaknya menu
 
-        int highlight = 0;
-        int choice = -1;
+        int highlight = 0; // menampilakn kotak warna
+        int choice = -1; // untuk tidak menampilkan higligt
 
         while (true)
         {
@@ -54,7 +54,7 @@ int main()
                 }
             }
 
-            int key = getch();
+            int key = getch(); //untuk menggunakan atas,bawah,kiri,kanan
 
             if (key == KEY_UP)
             {
@@ -82,13 +82,13 @@ int main()
 
         clear();
 
-        if (choice == -1)
+        if (choice == -1)  // tidak menapilkan higlight
         {
             mvprintw(2, 2, "Anda menekan Kembali/Batal.");
         }
         else
         {
-            mvprintw(2, 2, "%s", ("Anda memilih: " + menu[choice]).c_str());
+            mvprintw(2, 2, "%s", ("Anda memilih: " + menu[choice]).c_str()); // menampilkan hightligh
 
             string selected = menu[choice];
 
