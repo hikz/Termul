@@ -1,4 +1,4 @@
-# Termul 📦
+# Termul (Terminal Manajemen Unit Logistik) 📦
 
 Sistem manajemen inventaris berbasis terminal yang dibangun dengan C++ dan ncurses, menampilkan menu interaktif untuk mengelola stok produk, harga, dan penyimpanan data.
 
