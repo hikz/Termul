@@ -305,6 +305,7 @@ int main()
             }
             else if (selected == "8. Keluar") //keluar dari terminal dan akan berhenti
             {
+                endwin();
                 return 0;
             }
             else
